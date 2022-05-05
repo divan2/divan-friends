@@ -113,7 +113,7 @@ def upload_file():
         filename = photos.save(form.photo.data)
         return redirect(f'/register1/{filename}')
     else:
-        file_url = None
+        filename = None
     print('db ses')
 
     return render_template('save_picture.html', form=form)
@@ -122,7 +122,10 @@ def upload_file():
 @app.route('/logout')
 @login_required
 def logout():
-    logout_user()
+    try:
+        logout_user()
+    except:
+        return redirect("/")
     return redirect("/")
 
 @app.route('/change_params/<email>', methods=['GET', 'POST'])
