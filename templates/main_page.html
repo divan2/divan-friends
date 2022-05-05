@@ -4,8 +4,8 @@
 <h1> <font color="grey">Анкеты</font> </h1>
 
 <div align="right">
-    <a class="btn btn-outline-info" href="/change_params/{{email}}"><img src="static/sett.png" alt="Настройки"></a>
-     <a class="btn btn-outline-secondary" href="/profile"><img src="static/profile.png" alt="Настройки"></a>
+    <a class="btn btn-outline-info" href="/change_params/{{email}}"><img src="/static/sett.png" alt="Настройки"></a>
+     <a class="btn btn-outline-secondary" href="/profile"><img src="/static/profile.png" alt="Настройки"></a>
 </div>
 
 <div class="row">
@@ -15,12 +15,12 @@
             <div class="card">
                 <h4 class="card-header"><b>{{item.name}}</b></h4>
                 <div class="card-body">
-                    <img class="card-img-top" src="static/frienship.jpg" alt="Card image cap">
+                    <img class="card-img-top" src={{item.photo}} alt={{item.photo}}>
                     <a href="#" class="card-link">Посмотреть анкету</a>
                     <p class="card-text"> <font color="grey">Возраст:</font> {{item.age}}</p>
                     <p class="card-text"> <font color="grey">Город:</font> {{item.city}}</p>
                     <p class="card-text"> <font color="grey">Интересы:</font> {{item.about}}</p>
-                    <button class="btn btn-outline-warning"><img src="static/like.png" alt="Настройки"></button>
+                    <button class="btn btn-outline-warning"><img src="/static/like.png" alt="Настройки"></button>
                 </div>
             </div>
           </div>

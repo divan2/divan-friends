@@ -70,7 +70,7 @@ def reqister(file_name):
             sex=form.sex.data,
             age=form.age.data,
             city=form.city.data,
-            photo = 'uploads/'+file_name
+            photo = '/uploads/'+file_name
         )
         user.set_password(form.password.data)
         db_sess.add(user)
