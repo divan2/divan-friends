@@ -164,7 +164,7 @@ def change_params(email):
         print('по идее сэйв')
         return redirect('/logout')
     print('return')
-    return render_template('change_params.html', title='Cмена параетров аккаунта', form=form)
+    return render_template('change_params.html', title='Cмена параетров аккаунта', form=form, email=email)
 
 
 @app.route('/my_profile/<email>', methods=['GET', 'POST'])
@@ -173,6 +173,14 @@ def profile(email):
     users = db_sess.query(User)
     return render_template("my_profile.html", users=users, email=email)
 
+@app.route('/user_delete/<email>', methods=['GET', 'POST'])
+@login_required
+def news_delete(email):
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.email == email).first()
+    db_sess.delete(user)
+    db_sess.commit()
+    return redirect('/')
 
 if __name__ == '__main__':
     main()
