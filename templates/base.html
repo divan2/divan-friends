@@ -12,7 +12,6 @@
 <body>
 <header>
     <nav class="navbar navbar-light bg-warning">
-        <a class="navbar-brand" href="/logout">Выйти</a>
     </nav>
 </header>
 <center>
@@ -21,16 +20,7 @@
 <main role="main" class="container">
     {% block content %}{% endblock %}
     {% if current_user.is_authenticated %}
-    <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
-{% else %}
-    <p>
-            <center>
-        <img src="static/frienship.jpg"/>
-        <a class="btn btn-outline-info" href="/register">Зарегистрироваться</a>
-        <a class="btn btn-outline-dark" href="/login">Войти</a>
-            </center>
-    </p>
-{% endif %}
+    {% endif %}
 </main>
 </body>
 </html>

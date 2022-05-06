@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(basedir, 'uploads')
+app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(basedir, 'static')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -42,7 +42,7 @@ def main():
 
 @app.route("/")
 def index():
-    return render_template("base.html", title="Главная страница")
+    return render_template("first.html", title="Главная страница")
 
 @app.route('/register1/<file_name>', methods=['GET', 'POST'])
 def reqister(file_name):
@@ -70,7 +70,8 @@ def reqister(file_name):
             sex=form.sex.data,
             age=form.age.data,
             city=form.city.data,
-            photo = '/uploads/'+file_name
+            telegram=form.telegram.data,
+            photo = '/static/'+file_name
         )
         user.set_password(form.password.data)
         db_sess.add(user)
@@ -113,11 +114,15 @@ def upload_file():
         filename = photos.save(form.photo.data)
         return redirect(f'/register1/{filename}')
     else:
-        filename = None
+        filename = 'no_photo.png'
     print('db ses')
 
     return render_template('save_picture.html', form=form)
 
+@app.route('/no_photo', methods=['GET', 'POST'])
+def no_photo():
+    filename = 'no_photo.png'
+    return redirect(f'/register1/{filename}')
 
 @app.route('/logout')
 @login_required
@@ -141,36 +146,33 @@ def change_params(email):
                                    message="Пароли не совпадают")
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == email).first()
-        if db_sess.query(User).filter(User.email == form.email.data).first():
-            print("Такой пользователь уже есть")
-            return render_template('change_params.html', title='Cмена параетров аккаунта',
-                                   form=form,
-                                   message="Такой пользователь уже есть")
-        if user.check_password(form.password.data):
+        if not(user.check_password(form.old_password.data)):
             print('Неверный старый пароль')
             return render_template('change_params.html', title='Cмена параетров аккаунта',
                                    form=form,
-                                   message="Пароли не совпадают")
-        user.email = form.name.data
+                                   message="Неверный старый пароль")
+        user.email = form.email.data
         user.name = form.name.data
         user.age = form.age.data
         user.sex = form.sex.data
         user.city = form.city.data
         user.about = form.about.data
+        user.telegram = form.telegram.data
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
         print('по идее сэйв')
-        return redirect('/login')
+        return redirect('/logout')
     print('return')
     return render_template('change_params.html', title='Cмена параетров аккаунта', form=form)
 
 
-@app.route('/profile', methods=['GET', 'POST'])
-def profile():
+@app.route('/my_profile/<email>', methods=['GET', 'POST'])
+def profile(email):
     db_sess = db_session.create_session()
     users = db_sess.query(User)
-    return render_template("profile.html", users=users)
+    return render_template("my_profile.html", users=users, email=email)
+
 
 if __name__ == '__main__':
     main()

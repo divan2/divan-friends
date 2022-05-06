@@ -17,6 +17,7 @@ class RegisterForm(FlaskForm):
     age = IntegerField('Возраст', validators=[DataRequired()])
     sex = StringField('Пол', validators=[DataRequired()])
     city = StringField('Город', validators=[DataRequired()])
+    telegram = StringField('Любой способ с вами связаться', validators=[DataRequired()])
     submit = SubmitField("Зарегистрироваться")
 
 class ChangeForm(FlaskForm):
@@ -29,5 +30,6 @@ class ChangeForm(FlaskForm):
     age = IntegerField('Возраст', validators=[DataRequired()])
     sex = StringField('Пол', validators=[DataRequired()])
     city = StringField('Город', validators=[DataRequired()])
+    telegram = StringField('Любой способ с вами связаться. (телеграм или номер телефона)', validators=[DataRequired()])
     submit = SubmitField("Поменять параметры")
 

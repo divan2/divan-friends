@@ -76,7 +76,15 @@
             </p>
         {% endfor %}
     </p>
-
+    <p>
+        {{ form.telegram.label }}<br>
+        {{ form.telegram(class="form-control") }}<br>
+        {% for error in form.telegram.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
 
 
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>

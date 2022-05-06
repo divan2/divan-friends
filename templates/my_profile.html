@@ -2,25 +2,22 @@
 
 {% block content %}
 
-<h1> <font color="grey">Анкеты</font> </h1>
-<h1> <font color="grey">Добро пожаловать, {{current_user.name}}</font> </h1>
-<div align="right">
-    <a class="btn btn-outline-info" href="/change_params/{{email}}"><img src="/static/sett.png" alt="Настройки"></a>
-     <a class="btn btn-outline-secondary" href="/my_profile/{{email}}"><img src="/static/profile.png" alt="Настройки"></a>
-</div>
 
 <div class="row">
     {% for item in users %}
-        {% if email != item.email %}
+        {% if email == item.email %}
           <div class="col-sm-6">
             <div class="card">
                 <h4 class="card-header"><b>{{item.name}}</b></h4>
                 <div class="card-body">
                     <img class="card-img-top" src={{item.photo}} alt={{item.photo}}>
-                    <a class="btn btn-outline-dark" href="/my_profile/{{item.email}}">Посмотреть профиль</a>
+                    <a href="#" class="card-link">Посмотреть анкету</a>
+                    <p class="card-text"> <font color="grey">Почта:</font> {{item.email}}</p>
+                    <p class="card-text"> <font color="grey">Пол:</font> {{item.sex}}</p>
                     <p class="card-text"> <font color="grey">Возраст:</font> {{item.age}}</p>
                     <p class="card-text"> <font color="grey">Город:</font> {{item.city}}</p>
                     <p class="card-text"> <font color="grey">Интересы:</font> {{item.about}}</p>
+                    <p class="card-text"> <font color="grey">Напиши мне:</font> {{item.telegram}}</p>
                 </div>
             </div>
           </div>
@@ -28,5 +25,5 @@
 
     {% endfor %}
 </div>
-<a class="btn btn-outline-dark" href="/logout">Выйти из аккаунта</a>
+
 {% endblock %}
